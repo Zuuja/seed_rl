@@ -19,6 +19,7 @@ from absl import logging
 
 import gym
 from seed_rl.football import observation
+from .multiagent import SampleMultiAgentObservationWrapper, SampleMultiAgentRewardWrapper
 
 FLAGS = flags.FLAGS
 
@@ -30,6 +31,7 @@ flags.DEFINE_enum('reward_experiment', 'scoring',
 flags.DEFINE_enum('smm_size', 'default', ['default', 'medium', 'large'],
                   'Size of the Super Mini Map.')
 flags.DEFINE_integer('num_action_repeats', 1, 'Number of action repeats.')
+flags.DEFINE_integer('controlled_agents', 1, 'Number of controlled left agents')
 
 
 def create_environment(_):
@@ -45,5 +47,10 @@ def create_environment(_):
       'gfootball:GFootball-%s-SMM-v0' % FLAGS.game,
       stacked=True,
       rewards=FLAGS.reward_experiment,
-      channel_dimensions=channel_dimensions)
+      channel_dimensions=channel_dimensions,
+      number_of_left_players_agent_controls=FLAGS.controlled_agents)
+
+  env = SampleMultiAgentRewardWrapper(env)
+  env = SampleMultiAgentObservationWrapper(env)
+
   return observation.PackedBitsObservation(env)

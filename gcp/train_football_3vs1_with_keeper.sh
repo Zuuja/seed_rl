@@ -46,6 +46,10 @@ trainingInput:
       type: CATEGORICAL
       categoricalValues:
       - academy_3_vs_1_with_keeper
+    - parameterName: controlled_agents
+      type: INTEGER
+      minValue: 3
+      maxValue: 3
     - parameterName: reward_experiment
       type: CATEGORICAL
       categoricalValues:
