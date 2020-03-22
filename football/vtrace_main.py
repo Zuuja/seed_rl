@@ -23,7 +23,7 @@ from seed_rl.agents.vtrace import learner
 from seed_rl.common import actor
 from seed_rl.common import common_flags  
 from seed_rl.football import env
-from seed_rl.football import networks
+from seed_rl.agents.vtrace import networks
 import tensorflow as tf
 
 
@@ -36,7 +36,7 @@ flags.DEFINE_float('learning_rate', 0.00048, 'Learning rate.')
 
 def create_agent(unused_action_space, unused_env_observation_space,
                  parametric_action_distribution):
-  return networks.GFootball(parametric_action_distribution)
+  return networks.MLPandLSTM(parametric_action_distribution, [128, 128], [64])
 
 
 def create_optimizer(unused_final_iteration):
